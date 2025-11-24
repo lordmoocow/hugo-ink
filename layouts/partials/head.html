@@ -1,0 +1,99 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="index, follow">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+{{/* Title */}}
+{{ $title := .Site.Title }}
+{{ if .IsHome }}
+  {{ $title = .Site.Title }}
+{{ else if .Title }}
+  {{ $title = printf "%s | %s" .Title .Site.Title }}
+{{ end }}
+<title>{{ $title }}</title>
+
+{{/* Description */}}
+{{ $description := .Site.Params.description | default "" }}
+{{ if .Description }}
+  {{ $description = .Description }}
+{{ else if .Summary }}
+  {{ $description = .Summary | plainify | truncate 160 }}
+{{ end }}
+{{ if $description }}
+<meta name="description" content="{{ $description }}">
+{{ end }}
+
+{{/* Keywords */}}
+{{ if .Site.Params.keywords }}
+<meta name="keywords" content="{{ .Site.Params.keywords }}">
+{{ end }}
+
+{{/* Author */}}
+{{ with .Site.Params.author }}
+<meta name="author" content="{{ . }}">
+{{ end }}
+
+{{/* Open Graph */}}
+<meta property="og:title" content="{{ .Title | default .Site.Title }}">
+<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+<meta property="og:url" content="{{ .Permalink }}">
+{{ if $description }}
+<meta property="og:description" content="{{ $description }}">
+{{ end }}
+{{ with .Site.Params.avatarURL }}
+<meta property="og:image" content="{{ . | absURL }}">
+{{ end }}
+
+{{/* Twitter Card */}}
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="{{ .Title | default .Site.Title }}">
+{{ if $description }}
+<meta name="twitter:description" content="{{ $description }}">
+{{ end }}
+
+{{/* Canonical URL */}}
+<link rel="canonical" href="{{ .Permalink }}">
+
+{{/* Favicon */}}
+{{ with .Site.Params.favicon }}
+  {{ with .favicon_32 }}<link rel="icon" type="image/png" sizes="32x32" href="{{ . | absURL }}">{{ end }}
+  {{ with .favicon_16 }}<link rel="icon" type="image/png" sizes="16x16" href="{{ . | absURL }}">{{ end }}
+  {{ with .apple_touch_icon }}<link rel="apple-touch-icon" href="{{ . | absURL }}">{{ end }}
+{{ else }}
+<link rel="icon" href="/favicon.ico">
+{{ end }}
+
+{{/* RSS */}}
+{{ range .AlternativeOutputFormats }}
+  {{ printf `<link rel="%s" type="%s" href="%s" title="%s">` .Rel .MediaType.Type .Permalink $.Site.Title | safeHTML }}
+{{ end }}
+
+{{/* Main Stylesheet */}}
+{{ $style := resources.Get "css/style.css" }}
+{{ if hugo.IsProduction }}
+  {{ $style = $style | minify | fingerprint }}
+{{ end }}
+<link rel="stylesheet" href="{{ $style.RelPermalink }}"{{ if hugo.IsProduction }} integrity="{{ $style.Data.Integrity }}"{{ end }}>
+
+{{/* Math Support (KaTeX) */}}
+{{ if or .Site.Params.math .Params.math }}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js" integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Ber0SjLiTRdQ3M5GltW49ggw2UrC0loXzrcAMhJ" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  renderMathInElement(document.body, {
+    delimiters: [
+      {left: "$$", right: "$$", display: true},
+      {left: "\\[", right: "\\]", display: true},
+      {left: "$", right: "$", display: false},
+      {left: "\\(", right: "\\)", display: false}
+    ],
+    throwOnError: false
+  });
+});
+</script>
+{{ end }}

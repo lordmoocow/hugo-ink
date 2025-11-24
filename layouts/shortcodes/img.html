@@ -1,0 +1,8 @@
+{{ $src := .Get "src" }}
+{{ $alt := .Get "alt" }}
+{{ $width := .Get "width" | default "600x" }}
+
+{{ with resources.Get $src }}
+  {{ $resized := .Resize (printf "%s webp" $width) }}
+  <img src="{{ $resized.RelPermalink }}" alt="{{ $alt }}" loading="lazy" style="max-width: 100%; height: auto;">
+{{ end }}

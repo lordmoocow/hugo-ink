@@ -1,0 +1,12 @@
+name = "Ink"
+license = "MIT"
+licenselink = "https://github.com/lordmoocow/ink/blob/main/LICENSE"
+description = "A minimal, sleek Hugo theme designed for code-heavy blogs"
+homepage = "https://github.com/lordmoocow/ink"
+tags = ["blog", "minimal", "code", "responsive", "dark-mode"]
+features = ["syntax-highlighting", "responsive", "dark-mode", "math"]
+min_version = "0.112.0"
+
+[author]
+  name = "Samuel J. Williams"
+  homepage = "https://samueljwilliams.co.uk"
