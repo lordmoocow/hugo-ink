@@ -1,6 +1,13 @@
 <header class="site-header">
   <nav class="nav-container">
-    <a href="{{ .Site.BaseURL }}" class="site-title">{{ .Site.Title }}</a>
+    <a href="{{ .Site.BaseURL }}" class="site-brand">
+      {{/*- $profile := resources.Get "images/profile.jpeg" -*/}}
+      {{/*- if $profile -*/}}
+        {{/*- $small := $profile.Fill "64x64 Center" -*/}}
+        {{/*<img src="{{ $small.RelPermalink }}" alt="{{ .Site.Params.author }}" class="site-avatar">*/}}
+      {{/*- end -*/}}
+      <span class="site-title">{{ .Site.Title }}</span>
+    </a>
 
     <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">
       <span class="menu-icon"></span>
