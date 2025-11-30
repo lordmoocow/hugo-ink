@@ -1138,7 +1138,7 @@ figcaption {
   }
 
   /* Hero */
-  .avatar {
+  .avatar-wrapper {
     width: 100px;
     height: 100px;
   }
