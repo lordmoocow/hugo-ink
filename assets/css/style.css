@@ -190,7 +190,7 @@ code {
 pre {
   margin: var(--spacing-lg) 0;
   padding: 0;
-  overflow: hidden;
+  overflow-x: auto;
   background-color: var(--code-bg);
   border-radius: var(--radius-lg);
 }
@@ -245,7 +245,7 @@ pre code {
   position: relative;
   margin: var(--spacing-md) 0;
   border-radius: var(--radius-md);
-  overflow: hidden;
+  overflow-x: auto;
   background-color: var(--code-bg);
 }
 
